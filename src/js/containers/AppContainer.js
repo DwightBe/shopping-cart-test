@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { setSaying } from '../actions/AppActions';
 import {
   Cart,
   Product,
@@ -12,21 +11,6 @@ import {
 import Checkout from 'react-checkout';
 
 const { getDefaultLocalization } = cartLocalization;
-
-const iPadCaseLocalization = {
-  color: 'Color',
-  iPadCase: 'iPad case',
-  red: 'Red',
-  green: 'Green',
-  yellow: 'Yellow',
-  GBP: '£',
-  EUR: '€',
-  USD: '$',
-};
-
-const iPadPropertiesWithAdditionalCostLocalization = {
-  yellow: 'Yellow',
-};
 
 let  state = {
     product: {
@@ -44,8 +28,8 @@ let  state = {
         }],
       },
       propertiesToShowInCart: ['color'],
-      prices: { GBP: 70, EUR: 80, USD: 90 },
-      currency: 'GBP',
+      prices: { USD: 90 },
+      currency: 'USD',
       imageSrc: '1-483x321.jpeg',
     },
     getProductLocalization:
@@ -53,45 +37,56 @@ let  state = {
         'product',
         'en',
         {
-          ...iPadCaseLocalization,
-          ...iPadPropertiesWithAdditionalCostLocalization
+          color: 'Color',
+          iPadCase: 'iPad case',
+          red: 'Red',
+          green: 'Green',
+          yellow: 'Yellow',
+          GBP: '£',
+          EUR: '€',
+          USD: '$',
+          yellow: 'Yellow',
+
         }
       ),
     getCheckoutButtonLocalization:
       getDefaultLocalization(
         'checkoutButton',
         'en',
-        iPadCaseLocalization,
+        {color: 'Color',
+        iPadCase: 'iPad case',
+        red: 'Red',
+        green: 'Green',
+        yellow: 'Yellow',
+        GBP: '£',
+        EUR: '€',
+        USD: '$',}
       ),
     getCartLocalization:
       getDefaultLocalization(
         'cart',
         'en',
-        iPadCaseLocalization
+        {color: 'Color',
+        iPadCase: 'iPad case',
+        red: 'Red',
+        green: 'Green',
+        yellow: 'Yellow',
+        GBP: '£',
+        EUR: '€',
+        USD: '$',}
       )
   };
   const checkoutButtonElement =
         <CheckoutButton
-          getLocalization={
-            state.getCheckoutButtonLocalization
-          }
           checkoutURL="/to/my/checkout"
         />;
 
-let GreetComponent = (props) => (
-  <h1>{props.saying}, {props.match.params.name}!</h1>
-);
 
-const mapStateToProps = (state) => ({
-  saying: state.AppReducer.get('greetOrBye'),
-});
-
-GreetComponent = connect(mapStateToProps)(GreetComponent);
 
 
 const AppContainer = (props) => (
   <div>
-    <Route path="/:name" component={GreetComponent}/>
+    {console.log('hello', props)}
     <Product
             {...state.product}
             checkoutButton={checkoutButtonElement}
@@ -121,13 +116,9 @@ const AppContainer = (props) => (
           "address=*6|1 Chapel Hill, Heswall, BOURNEMOUTH, UK, BH1 1AA|The address where your order will be shipped",
         ]}
       />
-    <button onClick={() => props.say('Hello')}>Say Hello</button>
-    <button onClick={() => props.say('Goodbye')}>Say Goodbye</button>
+
   </div>
 );
 
-const mapDispatchToProps = (dispatch) => ({
-  say: (saying) => dispatch(setSaying(saying)),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default AppContainer;

@@ -9,14 +9,14 @@ import AppContainer from './containers/AppContainer';
 import {
   setCartCurrency,
 } from 'react-shopping-cart';
-import Checkout from 'react-checkout';
+import Checkout, { order } from 'react-checkout';
 
 const history = createHistory();
 const store = configureStore(history);
 
-store.dispatch(
-  setCartCurrency('USD'),
-);
+store.dispatch(order({ amount: 144000 }));
+
+console.log('store', store);
 
 render(
   <Provider store={store}>

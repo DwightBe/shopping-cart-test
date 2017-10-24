@@ -16,7 +16,6 @@ const store = configureStore(history);
 
 store.dispatch(order({ amount: 144000 }));
 
-console.log('store', store);
 
 render(
   <Provider store={store}>

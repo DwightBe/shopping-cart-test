@@ -12,25 +12,24 @@ import Checkout from 'react-checkout';
 
 const { getDefaultLocalization } = cartLocalization;
 
+const addProduct = () => {
+  console.log('hellosss');
+}
+
+
 let  state = {
     product: {
-      name: 'iPadCase',
+      name: 'painting',
       id: 'ipad-case',
       path: '/shop/ipad-case/',
       properties: {
-        color: ['red', 'green', {
-          additionalCost: {
-            GBP: 1,
-            EUR: 2,
-            USD: 3.50,
-          },
-          value: 'yellow',
-        }],
+        color: ['red'],
       },
       propertiesToShowInCart: ['color'],
       prices: { USD: 90 },
       currency: 'USD',
       imageSrc: '1-483x321.jpeg',
+      onAddProduct: addProduct
     },
     getProductLocalization:
       getDefaultLocalization(
@@ -40,12 +39,7 @@ let  state = {
           color: 'Color',
           iPadCase: 'iPad case',
           red: 'Red',
-          green: 'Green',
-          yellow: 'Yellow',
-          GBP: '£',
-          EUR: '€',
           USD: '$',
-          yellow: 'Yellow',
 
         }
       ),
@@ -53,46 +47,39 @@ let  state = {
       getDefaultLocalization(
         'checkoutButton',
         'en',
-        {color: 'Color',
-        iPadCase: 'iPad case',
-        red: 'Red',
-        green: 'Green',
-        yellow: 'Yellow',
-        GBP: '£',
-        EUR: '€',
-        USD: '$',}
       ),
     getCartLocalization:
       getDefaultLocalization(
         'cart',
         'en',
         {color: 'Color',
-        iPadCase: 'iPad case',
-        red: 'Red',
-        green: 'Green',
-        yellow: 'Yellow',
-        GBP: '£',
-        EUR: '€',
+        painting: 'paint',
+        red: 'Reud',
         USD: '$',}
       )
   };
   const checkoutButtonElement =
         <CheckoutButton
           checkoutURL="/to/my/checkout"
+          getLocalization={
+         state.getCheckoutButtonLocalization
+       }
         />;
 
 
 
 
 const AppContainer = (props) => (
+
   <div>
-    {console.log('hello', props)}
+  {console.log('props', props.store)}
     <Product
             {...state.product}
             checkoutButton={checkoutButtonElement}
             getLocalization={
               state.getProductLocalization
             }
+            onAddProduct={addProduct}
     />
     <Cart
             checkoutButton={checkoutButtonElement}
@@ -101,7 +88,7 @@ const AppContainer = (props) => (
             }
       />
       <Checkout
-        store={props.store}
+
         amountPrefix="Pay $"
         testStripeKey="pk_test_ry8ALrWRqEItYo3DQDAOynVH"
         liveStripeKey="pk_live_czjLJx8fbS6L6KvQIlItvPvY"

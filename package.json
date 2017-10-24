@@ -81,7 +81,9 @@
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.7.1",
+    "pre-commit": "^1.2.2",
+    "react-scripts": "1.0.11"
   },
   "scripts": {
     "dev": "webpack-dev-server --content-base public/",
